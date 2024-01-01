@@ -16,6 +16,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { SignupValidation } from "@/lib/validation";
 import Loader from "@/components/shared/Loader";
+import { createUserAccount } from "@/lib/appwrite/api";
 
 export default function SignupForm() {
 	const [isLoading, setIsLoading] = useState(false);
@@ -30,8 +31,11 @@ export default function SignupForm() {
 		},
 	});
 
-	function onSubmit(values: z.infer<typeof SignupValidation>) {
-		console.log(values);
+	async function onSubmit(values: z.infer<typeof SignupValidation>) {
+		// create the user
+		const newUser = await createUserAccount(values);
+
+		console.log(newUser);
 	}
 
 	return (
@@ -116,9 +120,15 @@ export default function SignupForm() {
 						)}
 					</Button>
 
-          <p className="text-small-regular text-light-2 text-center mt-2">
-            Already have an account? <Link to='/sign-in' className="text-primary-500 text-small-semibold ml-1">Log in</Link>
-          </p>
+					<p className="text-small-regular text-light-2 text-center mt-2">
+						Already have an account?
+						<Link
+							to="/sign-in"
+							className="text-primary-500 text-small-semibold ml-1"
+						>
+							Log in
+						</Link>
+					</p>
 				</form>
 			</div>
 		</Form>
