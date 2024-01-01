@@ -17,9 +17,11 @@ import { Input } from "@/components/ui/input";
 import { SignupValidation } from "@/lib/validation";
 import Loader from "@/components/shared/Loader";
 import { createUserAccount } from "@/lib/appwrite/api";
+import { useToast } from "@/components/ui/use-toast";
 
 export default function SignupForm() {
 	const [isLoading, setIsLoading] = useState(false);
+	const { toast } = useToast();
 
 	const form = useForm<z.infer<typeof SignupValidation>>({
 		resolver: zodResolver(SignupValidation),
@@ -35,7 +37,16 @@ export default function SignupForm() {
 		// create the user
 		const newUser = await createUserAccount(values);
 
-		console.log(newUser);
+		if (!newUser)
+			return toast({
+				title: "Sign up failed! Please try again.",
+			});
+
+		// const session = await signInAccount();
+
+		toast({
+			title: "",
+		});
 	}
 
 	return (
