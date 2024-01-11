@@ -1,9 +1,8 @@
 import { Models } from "appwrite";
-import React from "react";
 import { Link } from "react-router-dom";
 
-import { multiFormatDateString } from "@/lib/utils";
 import { useUserContext } from "@/context/AuthContext";
+import { multiFormatDateString } from "@/lib/utils";
 import PostStats from "./PostStats";
 
 interface PostCardProps {
